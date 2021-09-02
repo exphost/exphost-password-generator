@@ -1,0 +1,14 @@
+apiVersion: exphost.pl/v1
+kind: Password
+metadata:
+  name: pass1
+  namespace: default
+spec:
+  copy_namespaces:
+  - template-renderer
+  - password-generator
+  name: mypass
+  types:
+  - sha512
+  - sha256
+  - ezoteric #this will always fail
