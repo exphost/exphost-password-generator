@@ -6,6 +6,7 @@ import base64
 import random
 import string
 import passlib.hash
+from prometheus_client import start_http_server
 
 def generate_name(name, namespace):
     return "password-{name}-from-{namespace}".format(name=name, namespace=namespace)
@@ -155,3 +156,5 @@ def create_fn(spec, name, namespace ,logger, **kwargs):
         if cloned_secret.data != secret.data:
             logger.info("secret {name} different from source. replacing...".format(name=cloned_secret.metadata.name))
             api.replace_namespaced_secret(cloned_secret.metadata.name, cloned_secret.metadata.namespace, secret)
+
+start_http_server(8000)
