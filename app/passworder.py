@@ -12,7 +12,7 @@ def generate_name(name, namespace):
     return "password-{name}-from-{namespace}".format(name=name, namespace=namespace)
 
 def generate_password(length):
-    symbols = string.digits + string.ascii_letters + string.punctuation
+    symbols = string.digits + string.ascii_letters + "%+-,.;:<=>@^_"
     password = "".join(random.SystemRandom().choice(symbols) for i in range(length))
     return password
 
