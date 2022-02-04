@@ -30,6 +30,9 @@ def base(data):
 
 def generate_crypt(password, method, logger):
     crypt_name = method + "_crypt" 
+    if crypt_name == "base64_crypt":
+        logger.debug("using base64")
+        return base(base(password))
     try:
         logger.debug("looking for passlib.hash.{crypt_name}".format(crypt_name=crypt_name))
         crypt_fn = getattr(passlib.hash, crypt_name).hash
