@@ -12,7 +12,7 @@ def generate_name(name, namespace):
     return "password-{name}-from-{namespace}".format(name=name, namespace=namespace)
 
 def generate_password(length):
-    symbols = string.digits + string.ascii_letters + string.punctuation
+    symbols = string.digits + string.ascii_letters + "%+-,.;:<=>@^_"
     password = "".join(random.SystemRandom().choice(symbols) for i in range(length))
     return password
 
@@ -30,6 +30,9 @@ def base(data):
 
 def generate_crypt(password, method, logger):
     crypt_name = method + "_crypt" 
+    if crypt_name == "base64_crypt":
+        logger.debug("using base64")
+        return base(base(password))
     try:
         logger.debug("looking for passlib.hash.{crypt_name}".format(crypt_name=crypt_name))
         crypt_fn = getattr(passlib.hash, crypt_name).hash
